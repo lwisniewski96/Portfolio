@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Łukasza</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Witaj, jestem Łukasz</h1>
+        <nav>
+            <ul>
+                <li><a href="#o-mnie">O mnie</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="o-mnie">
+            <h2>O mnie</h2>
+            <p>Cześć! Jestem pasjonatem latania dronem, fotografii oraz nowinek technologicznych. Od dwóch lat zagłębiam się również w świat programowania, co pozwala mi łączyć moje zainteresowania w kreatywne projekty.</p>
+            <p>Nigdy nie jest za późno na zmianę branży - w końcu, kto powiedział, że nowe technologie są tylko dla młodych? 😄</p>
+            <p>Zapraszam do zapoznania się z moim portfolio i odkrycia, jak łączę swoje pasje w jednym miejscu.</p>
+        </section>
+        <section id="portfolio">
+            <h2>Portfolio</h2>
+            <div class="project">
+                <a href="https://sekrecjart.com.pl/" target="_blank">
+                    <img src="/img/sekrecjart.png" alt="Project 1">
+                    <div>
+                        <h3>Sekrecjart</h3>
+                        <p>Strona sklepu internetowego</p>
+                    </div>
+                </a>
+            </div>
+            <div class="project">
+                <a href="https://gramywpolski.pl/" target="_blank">
+                    <img src="/img/gramy w polski grafika.png" alt="Project 2">
+                    <div>
+                        <h3>Gramy w polski</h3>
+                        <p>Strona stworzona dla pasjonatów gier i korepetytorów języka polskiego.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="project">
+                <a href="https://lwisniewski96.github.io/goit-markup-hw-08//" target="_blank">
+                    <img src="/img/Zrzut ekranu 2024-06-6 o 14.29.50.png" alt="Project 2">
+                    <div>
+                        <h3>Poglądowa strona dla firm</h3>
+                        <p></p>
+                    </div>
+                </a>
+            </div>
+            <!-- Dodaj więcej projektów w ten sam sposób -->
+        </section>
+        <section id="kontakt">
+            <h2>Kontakt</h2>
+            <div class="contact-icons">
+                <a href="https://github.com/twoj-profil" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/%C5%82ukasz-wi%C5%9Bniewski-121a15242/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:lwisniewski401@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="/img/CV-Lukasz-Wisniewski-21-03-2023-13-26-22.pdf" target="_blank"><i class="fas fa-file-alt"></i> CV</a>
+            </div>
+            <form id="contactForm">
+                <label for="name">Imię:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Wiadomość:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Wyślij</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Łukasz Wiśniewski. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+   
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+
+            const response = await fetch('http://localhost:3000/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: data.get('name'),
+                    email: data.get('email'),
+                    message: data.get('message')
+                })
+            });
+
+            const responseMessage = document.getElementById('responseMessage');
+            if (response.ok) {
+                responseMessage.textContent = 'Wiadomość została wysłana!';
+                responseMessage.style.color = 'green';
+            } else {
+                responseMessage.textContent = 'Wystąpił błąd podczas wysyłania wiadomości.';
+                responseMessage.style.color = 'red';
+            }
+
+            form.reset();
+        });
+    </script>
+</body>
+</html>
